@@ -112,9 +112,9 @@ class SpamDetectorWebTests(unittest.TestCase):
 class PreprocessingTests(unittest.TestCase):
     def test_preprocessing_matches_notebook_steps(self):
         with patch.object(
-            app_module.stopwords,
-            "words",
-            return_value=["the", "are"],
+            app_module,
+            "_english_stop_words",
+            return_value={"the", "are"},
         ):
             result = app_module.preprocess_message("The offers are RUNNING!")
 

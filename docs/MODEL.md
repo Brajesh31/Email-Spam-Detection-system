@@ -53,4 +53,4 @@ Accuracy alone can hide poor spam recall or an unacceptable false-positive rate.
 
 ## Artifact safety
 
-The `.pkl` files are executable serialized Python objects. Never load artifacts received from an untrusted source. Review and validate the training process, keep the model and vectorizer together, and record their provenance when publishing releases.
+The `.pkl` files are executable serialized Python objects. Never load artifacts received from an untrusted source. Review and validate the training process, keep the model and vectorizer together, and record their provenance when publishing releases. Serialized scikit-learn estimators are version-sensitive; use the pinned version and rebuild both artifacts when intentionally upgrading the model stack.
