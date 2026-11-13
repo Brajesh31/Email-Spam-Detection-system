@@ -1,0 +1,21 @@
+name: Feature request
+description: Propose an improvement to the classifier or web interface.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+    validations:
+      required: true
+  - type: textarea
+    id: evaluation
+    attributes:
+      label: How should the change be evaluated?
