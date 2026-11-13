@@ -1,27 +1,33 @@
 # Scope and Limitations
 
-## What the project does
+## Implemented task
 
-The project accepts one text message and labels it with a saved TF-IDF plus Multinomial Naive Bayes classifier trained against an SMS spam dataset. It is useful for learning a basic text-classification workflow and serving a saved model through Flask.
+The application accepts one plain-text message and returns a Spam or Not Spam label using TF-IDF and a saved Multinomial Naive Bayes classifier trained on SMS-style data.
 
-## What it does not do
+## Not implemented
 
-- It does not inspect full email messages, headers, attachments, sender authentication, links, or domain reputation.
-- It does not connect to Gmail, Outlook, SMTP, IMAP, or a mail gateway.
-- It does not provide an inbox, user accounts, message history, or a database.
-- It does not perform malware scanning, phishing URL analysis, or threat-intelligence lookups.
-- It does not provide guaranteed detection or explainable evidence for each classification.
-- It is not hardened for unauthenticated public traffic.
+- Parsing full email messages or RFC-compliant email structure.
+- Sender/domain reputation or SPF, DKIM and DMARC analysis.
+- URL reputation, redirect analysis or attachment scanning.
+- Gmail, Outlook, SMTP, IMAP or mail-gateway integration.
+- User accounts, authentication, message history or a database.
+- Rate limiting, abuse monitoring or enterprise operations.
+- Confidence calibration, model explanations or guaranteed prediction.
+- Malware detection or phishing classification as a validated task.
 
-## Known technical limitations
+## Technical limitations
 
-- The training dataset's source and redistribution terms are not documented inside this repository.
-- The saved model and vectorizer are serialized Python artifacts and require trusted provenance.
-- Model quality depends on preprocessing parity, corpus representativeness, and evaluation methodology.
-- The NLTK stop-word corpus must be available in the runtime environment.
-- There is no rate limiter, authentication layer, persistent audit trail, or production monitoring.
-- The training notebook contains interactive and plotting-oriented steps; it is not a production model-training pipeline.
+- Dataset provenance, licence and exact revision are not documented in the repository.
+- Data split uses a fixed 20% test size and random seed but does not explicitly stratify labels.
+- The historical accuracy output may be stale and is not a complete report.
+- No external/temporal evaluation dataset is included.
+- The bag-of-words TF-IDF representation does not understand intent or message context.
+- Simple ASCII punctuation removal and whitespace tokenization have language and Unicode limitations.
+- Model and vectorizer are serialized artifacts and require trusted provenance and compatible software versions.
+- NLTK stop-word resources must be downloaded separately.
+- No authentication, rate limiting, persistent audit, monitoring or retention configuration exists.
+- The built-in Flask server is for local development only.
 
 ## Appropriate use
 
-Use it as a local educational example. Do not make operational security decisions from its output. A production email-security system needs broader signals, robust evaluation on representative email data, privacy controls, monitoring, abuse prevention, and human escalation paths.
+Use this repository as a local learning example for a small NLP pipeline and Flask inference interface. Do not make operational security decisions from its output. A production mail-security system needs representative email data, richer signals, careful false-positive controls, privacy governance, operational monitoring and human escalation.

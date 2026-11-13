@@ -1,5 +1,5 @@
 name: Feature request
-description: Propose an improvement to the classifier or web interface.
+description: Propose a classifier, evaluation, Flask UI or documentation improvement.
 title: "[Feature]: "
 labels: ["enhancement"]
 body:
@@ -18,4 +18,11 @@ body:
   - type: textarea
     id: evaluation
     attributes:
-      label: How should the change be evaluated?
+      label: Evaluation plan
+      description: Include held-out metrics, validation data and false-positive considerations for model changes.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Data, privacy and security implications

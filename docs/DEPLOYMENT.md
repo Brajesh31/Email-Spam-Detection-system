@@ -1,38 +1,42 @@
 # Deployment
 
-## Current status
+## Current deployment status
 
-This repository is an educational Flask demonstration. It has no authentication, persistence, rate limiting, monitoring, abuse controls, or production email integration. Do not expose it as a public mail-security service in its current form.
+This repository is an educational Flask demonstration. It has no authentication, persistence, rate limiting, abuse controls, monitoring, or production email integration. Do not deploy it as a public mail-security service or invite users to submit private messages.
 
-## Pre-deployment requirements
+## Pre-deployment review
 
-1. Build and review the model and vectorizer together from a trusted training environment.
-2. Confirm the data license and the right to redistribute the dataset and model artifacts.
-3. Install the pinned Python dependencies and the NLTK English stop-word resource.
-4. Run the full test suite in the target environment.
-5. Use a production WSGI server. Do not run Flask's built-in development server with debug mode in production.
-6. Terminate HTTPS at a maintained reverse proxy or load balancer.
-7. Restrict request size, apply rate limits, and define abuse monitoring.
-8. Do not log message bodies. Decide whether messages are processed only in memory and document retention behaviour.
-9. Add operational health checks, error monitoring, dependency updates, and a model rollback procedure.
-10. Verify that the deployed model and vectorizer correspond to the same reviewed training run.
+1. Build and review the classifier and vectorizer together.
+2. Confirm dataset provenance and redistribution rights.
+3. Install pinned Python packages and the NLTK stop-word corpus.
+4. Run compile, unit and notebook tests in the target environment.
+5. Use a production WSGI server rather than Flask's built-in development server.
+6. Terminate TLS at a maintained reverse proxy or hosting platform.
+7. Apply rate limits and request-size restrictions at both edge and application layers.
+8. Avoid logging message content and define retention behaviour.
+9. Configure health checks, structured error monitoring and rollback.
+10. Record model/vectorizer versions and artifact provenance.
 
-## Example WSGI launch
+## Example WSGI deployment
 
-Gunicorn is not included in `requirements.txt`. Install and pin it as part of the deployment environment, then run:
+Gunicorn is not included in `requirements.txt`. Add and pin a supported WSGI server in the deployment environment before using the following example:
 
 ```bash
 gunicorn --workers 2 --bind 127.0.0.1:8000 app:app
 ```
 
-A reverse proxy should provide HTTPS and forward traffic to the WSGI server. Choose worker counts based on measured resource use, not this example.
+A reverse proxy should serve HTTPS and forward requests to the WSGI process. Select worker count based on measured request latency and memory use. On Windows, use a WSGI server supported by the hosting platform.
 
-On Windows, use a production WSGI server supported by the deployment platform, such as Waitress.
+## Development-server settings
 
-## Environment
+- `FLASK_HOST`: default `127.0.0.1`.
+- `PORT`: default `5000`.
+- `FLASK_DEBUG`: local-only debug switch; leave unset in production.
 
-- `FLASK_HOST`: development-server bind address, default `127.0.0.1`.
-- `PORT`: development-server port, default `5000`.
-- `FLASK_DEBUG`: local-only debug switch. Leave unset in production.
+The WSGI service should be configured by the hosting platform. The `if __name__ == "__main__"` block is not a production process manager.
 
-The WSGI server should be configured directly by the hosting platform. Do not rely on `app.py`'s development-server block to launch production traffic.
+## Production controls still missing
+
+Authentication, request rate limiting, abuse monitoring, privacy retention controls, security headers, operational health endpoints, alerting, dependency scanning, and a model rollback process. The model is not evaluated for full email-security use.
+
+See [OPERATIONS.md](OPERATIONS.md) and [SECURITY_REVIEW.md](SECURITY_REVIEW.md).

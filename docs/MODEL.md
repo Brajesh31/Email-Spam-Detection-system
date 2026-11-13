@@ -2,55 +2,37 @@
 
 ## Dataset scope
 
-The checked-in `spam.csv` contains two relevant fields, `Category` and `Message`, representing ham/spam SMS messages. The training notebook maps `ham` to `0` and `spam` to `1`.
+The checked-in `spam.csv` contains the columns `Category` and `Message`, with ham/spam SMS-style message data. The notebook maps `ham` to 0 and `spam` to 1.
 
-This is not a representative email corpus. It does not model email headers, sender authentication, attachments, embedded images, URL reputation, domain age, or mail-server telemetry. The app's original page wording called the input an email, but the dataset supports a text/SMS demonstration only.
+This is not a full email dataset. It does not model mail headers, sender identity, SPF/DKIM/DMARC results, attachments, embedded images, URL reputation, domain age, mailbox behaviour, message threading or mail-server telemetry.
 
-The repository does not currently document a verified dataset source URL, dataset license, or a data-version checksum. Confirm the data provenance and redistribution terms before using the CSV outside this educational repository.
+The repository does not record a verified dataset source URL, exact dataset version, licence or checksum. Confirm provenance and redistribution rights before reusing the CSV elsewhere.
 
 ## Training pipeline
 
-The notebook currently performs the following steps:
-
-1. Reads `spam.csv` using Latin-1 encoding and selects `Category` and `Message`.
-2. Renames those fields to `label` and `message`.
-3. Converts each message to lowercase.
-4. Removes ASCII punctuation.
-5. Splits on whitespace, removes NLTK English stop words, and applies the NLTK Porter stemmer.
-6. Maps ham/spam labels to numeric classes.
-7. Splits the data with `test_size=0.2` and `random_state=42`.
-8. Fits `TfidfVectorizer` on training text and transforms test text with the same fitted vectorizer.
-9. Fits `MultinomialNB` on the training feature matrix.
-10. Evaluates predictions and exports the classifier and vectorizer as separate joblib/pickle artifacts.
-
-The notebook's classification-report plot now builds its report DataFrame explicitly. It reads the dataset relative to the notebook's working directory rather than using a Colab-only absolute path.
+1. Read `spam.csv` using Latin-1 encoding.
+2. Keep `Category` and `Message`, renaming them to `label` and `message`.
+3. Lowercase each message.
+4. Remove characters in Python's ASCII `string.punctuation`.
+5. Split on whitespace, remove NLTK English stop words and apply Porter stemming.
+6. Map ham/spam to 0/1.
+7. Split normalized text and labels into train/test using `test_size=0.2` and `random_state=42`.
+8. Fit `TfidfVectorizer` only on the training text.
+9. Transform test text using the same fitted vectorizer.
+10. Fit `MultinomialNB` on training TF-IDF values.
+11. Calculate accuracy, classification report and confusion matrix.
+12. Export classifier and vectorizer separately using joblib.
 
 ## Runtime contract
 
-The Flask application must repeat the exact text preprocessing sequence before calling the saved vectorizer. The model and vectorizer must come from the same training run. A changed stop-word list, stemming rule, punctuation policy, or vectorizer configuration requires regeneration of both artifacts.
+The Flask app repeats the same normalization before `vectorizer.transform()`. Both serialized artifacts must come from the same training run. A changed preprocessing rule, stop-word list, tokenization method or vectorizer configuration requires both artifacts to be rebuilt.
 
-The NLTK English stop-word corpus is not embedded in the repository. Install dependencies and run:
+Run `python scripts/setup_nltk.py` to provision the external English stop-word corpus.
 
-```bash
-python scripts/setup_nltk.py
-```
+## Evaluation
 
-## Evaluation and reporting
+The checked-in notebook includes a historical 96.68% accuracy output. Treat it as an archived execution result, not a reproducible benchmark or guarantee. A proper report should include class-wise precision, recall, F1, support, confusion matrix, class distribution, dataset provenance, split strategy and software versions.
 
-The notebook contains a historical output of 96.68% accuracy. Treat that as a saved notebook result, not as a current reproducible benchmark. It should not be promoted as a model guarantee without rerunning the complete notebook and reviewing the evaluation setup.
+## Artifact compatibility and safety
 
-For any published result, record:
-
-- dataset source/version and cleaning decisions;
-- train/test split, random seed, and stratification policy;
-- label distribution in each split;
-- precision, recall, F1, and confusion matrix for both classes;
-- false-positive and false-negative counts;
-- whether evaluation is held-out, cross-validation, or training data;
-- Python, NLTK, NumPy, and scikit-learn versions.
-
-Accuracy alone can hide poor spam recall or an unacceptable false-positive rate.
-
-## Artifact safety
-
-The `.pkl` files are executable serialized Python objects. Never load artifacts received from an untrusted source. Review and validate the training process, keep the model and vectorizer together, and record their provenance when publishing releases. Serialized scikit-learn estimators are version-sensitive; use the pinned version and rebuild both artifacts when intentionally upgrading the model stack.
+The `.pkl` files contain serialized Python objects. Loading a pickle/joblib file can execute code. Only load trusted artifacts from a reviewed training process. scikit-learn serialization is version-sensitive; the repository pins scikit-learn 1.6.1 to match the version reported for the saved artifacts. An intentional upgrade should regenerate and validate both files.

@@ -6,6 +6,7 @@ env/
 .ipynb_checkpoints/
 .env
 .env.*
+!.env.example
 *.log
 .pytest_cache/
 .coverage

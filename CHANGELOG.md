@@ -1,14 +1,12 @@
 # Changelog
 
-Notable repository changes are recorded here.
+This log records repository changes. It does not imply that historical classifier metrics are current or that the demonstration is production email security.
 
 ## Unreleased
 
-- Align Flask inference preprocessing with the notebook's training preprocessing.
-- Add server-side blank and maximum-length validation.
-- Disable Flask debug mode by default and bind the development server to localhost.
-- Add a setup script for the NLTK English stop-word corpus.
-- Add deterministic Flask route and preprocessing tests.
-- Repair notebook-relative dataset loading and classification-report plotting.
-- Expand model, deployment, security, testing, troubleshooting, and limitation documentation.
-- Extend CI to compile and run the test suite.
+- Repair notebook dataset loading and classification-report code-cell formatting.
+- Add automated compilation checks for all notebook code cells.
+- Expand documentation for API behaviour, dataset provenance, preprocessing, evaluation, model card, environment, UI and operations.
+- Expand architecture, development, deployment, testing, security, limitations and troubleshooting documentation.
+- Clarify SMS/text task scope across project documentation.
+- Preserve scikit-learn 1.6.1 compatibility with the checked-in serialized model artifacts.

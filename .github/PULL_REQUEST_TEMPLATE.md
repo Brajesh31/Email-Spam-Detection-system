@@ -1,19 +1,30 @@
 ## Summary
-What problem does this change solve?
+Describe the problem and the change.
 
 ## Change type
-- [ ] Bug fix
-- [ ] Feature
-- [ ] Model or dataset change
+- [ ] Flask route or UI
+- [ ] Preprocessing
+- [ ] Dataset
+- [ ] Classifier or vectorizer
+- [ ] Notebook
+- [ ] Tests or CI
 - [ ] Documentation
-- [ ] Dependency or maintenance
+- [ ] Dependencies or operations
 
 ## Validation
 - [ ] `python -m compileall -q app.py tests scripts`
 - [ ] `python -m unittest discover -s tests -v`
-- [ ] Reviewed the Flask prediction flow
-- [ ] For model changes, included reproducible held-out evaluation metrics
-- [ ] No private message content, secrets, or untrusted model artifacts added
+- [ ] Started the Flask app locally
+- [ ] For notebook changes, ran the notebook from a clean kernel
+- [ ] For model changes, recorded held-out precision, recall, F1, support and confusion matrix
 
-## Model artifact impact
-Describe whether the classifier or vectorizer changed, how they were generated, and whether both artifacts were updated together.
+## Model artefacts
+State whether the classifier and vectorizer were regenerated together. Include package versions, preprocessing changes, dataset provenance and artifact version/checksum when applicable.
+
+## Data safety
+- [ ] No private message samples, credentials, personal data or confidential exports added.
+- [ ] Serialized model files come from a trusted reviewed process.
+
+## Documentation
+- [ ] Updated API, dataset, preprocessing, evaluation, model card and operational docs where relevant.
+- [ ] Stated current scope and known limitations accurately.

@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a reproducible application or model issue.
+description: Report a reproducible Flask, notebook, model or documentation issue.
 title: "[Bug]: "
 labels: ["bug"]
 body:
@@ -7,6 +7,7 @@ body:
     id: summary
     attributes:
       label: Description
+      description: State the affected command, route, model step or document.
     validations:
       required: true
   - type: textarea
@@ -15,17 +16,28 @@ body:
       label: Steps to reproduce
     validations:
       required: true
-  - type: textarea
-    id: expected
-    attributes:
-      label: Expected behavior
-    validations:
-      required: true
   - type: input
     id: environment
     attributes:
-      label: Python version and operating system
+      label: Python, OS and dependency environment
+    validations:
+      required: true
   - type: textarea
-    id: logs
+    id: expected
     attributes:
-      label: Sanitized error output
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour and sanitized output
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Data safety
+      options:
+        - label: I have not included private messages, credentials, personal identifiers or confidential data.
+          required: true
