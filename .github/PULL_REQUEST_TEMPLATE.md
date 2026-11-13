@@ -1,5 +1,5 @@
 ## Summary
-What does this change do and why?
+What problem does this change solve?
 
 ## Change type
 - [ ] Bug fix
@@ -9,10 +9,11 @@ What does this change do and why?
 - [ ] Dependency or maintenance
 
 ## Validation
-- [ ] `python -m compileall -q app.py`
-- [ ] Tested the Flask page and prediction flow
-- [ ] For model changes, included reproducible held-out metrics
-- [ ] No private message data or secrets added
+- [ ] `python -m compileall -q app.py tests scripts`
+- [ ] `python -m unittest discover -s tests -v`
+- [ ] Reviewed the Flask prediction flow
+- [ ] For model changes, included reproducible held-out evaluation metrics
+- [ ] No private message content, secrets, or untrusted model artifacts added
 
 ## Model artifact impact
-Describe whether model or vectorizer artifacts changed and how they were generated.
+Describe whether the classifier or vectorizer changed, how they were generated, and whether both artifacts were updated together.

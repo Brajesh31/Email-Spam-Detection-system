@@ -10,3 +10,8 @@ env/
 .pytest_cache/
 .coverage
 htmlcov/
+.nltk_data/
+.ruff_cache/
+*.egg-info/
+build/
+dist/

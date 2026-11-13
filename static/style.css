@@ -5,103 +5,170 @@
 }
 
 body {
+  min-height: 100vh;
+  padding: 24px;
   background: #f0f4f8;
+  color: #222;
   font-family: 'Inter', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 .container {
-  background: white;
-  padding: 30px 40px;
+  background: #fff;
+  padding: 32px 40px;
   border-radius: 16px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
-  width: 90%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
   max-width: 700px;
   text-align: center;
 }
 
 h1 {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   font-size: 28px;
+  line-height: 1.3;
   color: #222;
 }
 
+.intro,
+.field-hint {
+  color: #586474;
+  line-height: 1.5;
+}
+
+.intro {
+  margin-bottom: 24px;
+}
+
 form textarea {
+  display: block;
   width: 100%;
-  height: 180px;
+  min-height: 180px;
   padding: 15px;
+  font: inherit;
   font-size: 16px;
   border-radius: 10px;
-  border: 1px solid #ccc;
-  resize: none;
-  margin-bottom: 20px;
+  border: 1px solid #aeb8c4;
+  resize: vertical;
+  margin-bottom: 8px;
+}
+
+form textarea:focus-visible,
+form button:focus-visible {
+  outline: 3px solid #80bdff;
+  outline-offset: 2px;
+}
+
+.field-hint {
+  margin-bottom: 18px;
+  font-size: 13px;
+  text-align: left;
 }
 
 form button {
   padding: 12px 30px;
+  font: inherit;
   font-size: 16px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.2s ease;
 }
 
 form button:hover {
   background-color: #0056b3;
 }
 
-.result-box {
-  margin-top: 25px;
+.result-box,
+.error-box {
+  margin-top: 20px;
   padding: 15px 20px;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
+  line-height: 1.5;
   border-radius: 10px;
 }
 
 .result-box.spam {
   background-color: #ffe2e2;
-  color: #c0392b;
+  color: #9f2922;
   border: 1px solid #e74c3c;
 }
 
 .result-box.not-spam {
   background-color: #e3f9e5;
-  color: #27ae60;
+  color: #176b34;
   border: 1px solid #2ecc71;
+}
+
+.error-box {
+  margin: 0 0 18px;
+  background: #fff4e5;
+  color: #7a3e00;
+  border: 1px solid #f0bd72;
+  text-align: left;
+  font-size: 14px;
 }
 
 .original-email {
   background: #f6f6f6;
-  padding: 15px;
+  padding: 16px;
   border-radius: 10px;
   margin-top: 20px;
   text-align: left;
   font-size: 15px;
   color: #333;
-  border: 1px solid #ccc;
+  border: 1px solid #d5dbe2;
+  overflow-wrap: anywhere;
 }
 
-.original-email h3 {
+.original-email h2 {
   margin-bottom: 10px;
-  color: #007bff;
+  color: #0056b3;
+  font-size: 16px;
+}
+
+.original-email p {
+  white-space: pre-wrap;
 }
 
 .another-btn {
-  margin-top: 25px;
-  padding: 10px 25px;
-  font-size: 15px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  margin-top: 24px;
+  background-color: #218838;
 }
 
 .another-btn:hover {
-  background-color: #1e7e34;
+  background-color: #176b2c;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 560px) {
+  body {
+    padding: 12px;
+    align-items: flex-start;
+  }
+
+  .container {
+    margin: auto 0;
+    padding: 24px 18px;
+  }
+
+  h1 {
+    font-size: 23px;
+  }
 }

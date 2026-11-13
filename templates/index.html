@@ -2,34 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Email Spam Detector</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Text Spam Detector</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="container">
-    <h1><i class="fas fa-envelope-open-text"></i> Email Spam Detector</h1>
+  <main class="container">
+    <h1><i class="fas fa-envelope-open-text" aria-hidden="true"></i> Text Spam Detector</h1>
+    <p class="intro">Check a text message with a Naive Bayes demo classifier.</p>
+
+    {% if error %}
+      <div class="error-box" role="alert">{{ error }}</div>
+    {% endif %}
 
     {% if result %}
-      <div class="result-box {{ 'spam' if result == 'Spam' else 'not-spam' }}">
+      <section class="result-box {{ 'spam' if result == 'Spam' else 'not-spam' }}" aria-live="polite">
         <p><strong>Prediction:</strong> {{ result }}</p>
-      </div>
+      </section>
 
-      <div class="original-email">
-        <h3>Analyzed Email:</h3>
+      <section class="original-email">
+        <h2>Analyzed message</h2>
         <p>{{ email_text }}</p>
-      </div>
+      </section>
 
       <form action="/" method="GET">
-        <button type="submit" class="another-btn"><i class="fas fa-redo-alt"></i> Check Another Email</button>
+        <button type="submit" class="another-btn">Check another message</button>
       </form>
     {% else %}
       <form action="/predict" method="POST">
-        <textarea name="email_text" placeholder="Paste your email content here..." required></textarea>
-        <button type="submit"><i class="fas fa-search"></i> Analyze Email</button>
+        <label class="visually-hidden" for="email_text">Message text</label>
+        <textarea
+          id="email_text"
+          name="email_text"
+          placeholder="Paste a text message here..."
+          maxlength="{{ max_message_length }}"
+          required
+        >{{ email_text }}</textarea>
+        <p class="field-hint">Maximum {{ "{:,}".format(max_message_length) }} characters. Do not paste private or confidential messages.</p>
+        <button type="submit"><i class="fas fa-search" aria-hidden="true"></i> Analyze message</button>
       </form>
     {% endif %}
-  </div>
+  </main>
 </body>
 </html>
